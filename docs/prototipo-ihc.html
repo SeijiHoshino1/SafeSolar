@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SafeSolar - Prototipo IHC</title>
+  <style>
+    :root{--navy:#0c2038;--blue:#123a63;--green:#18a783;--sun:#ffb31f;--bg:#f3f7fa;--text:#172433;--muted:#69788a;--danger:#dc4c55;--line:#dce5ec}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,Segoe UI,Arial,sans-serif}
+    button{font:inherit}.layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh}.sidebar{background:var(--navy);color:#fff;padding:26px 18px;position:sticky;top:0;height:100vh}
+    .brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:800;margin:0 8px 34px}.sun{width:32px;height:32px;border-radius:50%;background:var(--sun);box-shadow:0 0 0 5px #ffb31f22}
+    nav a{display:flex;gap:12px;align-items:center;color:#cbd7e2;text-decoration:none;padding:12px;border-radius:9px;margin:5px 0}nav a.active,nav a:hover{background:#ffffff14;color:#fff}.system{position:absolute;bottom:24px;left:26px;color:#b8c5d0}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ed6a6;margin-right:7px}
+    main{padding:28px 34px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.top h1{font-size:25px;margin:0}.top p{color:var(--muted);margin:3px 0}.actions{display:flex;gap:10px}.btn{border:1px solid var(--line);background:#fff;border-radius:9px;padding:10px 14px;font-weight:650;cursor:pointer}.btn.primary{background:var(--green);border-color:var(--green);color:#fff}.btn:focus{outline:3px solid #18a78344;outline-offset:2px}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.card{background:#fff;border:1px solid #e4ebf0;border-radius:13px;padding:18px;box-shadow:0 3px 14px #17344b0a}.label{color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.value{font-size:26px;font-weight:800;margin:8px 0 2px}.trend{font-size:12px;color:var(--green)}
+    .grid{display:grid;grid-template-columns:1.65fr 1fr;gap:15px;margin-top:15px}.section-title{display:flex;justify-content:space-between;align-items:center}.section-title h2{font-size:16px;margin:0}.section-title span{color:var(--muted);font-size:12px}.chart{height:210px;display:flex;align-items:flex-end;gap:4%;padding:24px 8px 0;border-bottom:1px solid var(--line);background:repeating-linear-gradient(to top,transparent 0,transparent 51px,#eef3f6 52px)}
+    .bar{flex:1;border-radius:5px 5px 0 0;position:relative;background:var(--green)}.bar:nth-child(even){background:var(--sun)}.bar:after{content:attr(data-day);position:absolute;bottom:-24px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--muted)}
+    .alert{display:grid;grid-template-columns:8px 1fr auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.alert:last-child{border:0}.severity{border-radius:6px;background:var(--danger)}.severity.medium{background:var(--sun)}.alert strong{display:block}.alert small{color:var(--muted)}.tag{align-self:start;font-size:11px;font-weight:700;padding:4px 8px;border-radius:99px;background:#fff0f1;color:var(--danger)}
+    .table-card{margin-top:15px;padding-bottom:8px;overflow:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:13px 12px;border-bottom:1px solid var(--line)}th{color:var(--muted);font-size:11px;text-transform:uppercase}td strong{display:block}.positive{color:var(--green);font-weight:700}.negative{color:var(--danger);font-weight:700}.status{background:#e8f8f3;color:#08785d;padding:4px 8px;border-radius:99px;font-size:11px;font-weight:700}
+    .mobile-nav{display:none}@media(max-width:900px){.layout{display:block}.sidebar{display:none}main{padding:20px 16px 80px}.top{align-items:flex-start}.top p{display:none}.actions .btn:first-child{display:none}.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.value{font-size:22px}.mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding:10px 4px;z-index:5}.mobile-nav a{font-size:11px;text-decoration:none;color:var(--muted);text-align:center}.mobile-nav b{display:block;font-size:17px;color:var(--blue)}}
+    @media(max-width:480px){.kpis{grid-template-columns:1fr 1fr;gap:9px}.card{padding:14px}.label{font-size:10px}.top h1{font-size:21px}.btn{padding:9px 11px}.chart{height:170px}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand"><span class="sun"></span> SafeSolar</div>
+    <nav aria-label="Navegacao principal">
+      <a class="active" href="#">▦ Dashboard</a><a href="#">⌂ Unidades</a><a href="#">↯ Medicoes</a>
+      <a href="#">⇄ Rateios</a><a href="#">⚠ Alertas</a><a href="#">▤ Relatorios</a>
+    </nav>
+    <div class="system"><span class="dot"></span>Sistema operacional</div>
+  </aside>
+  <main>
+    <header class="top">
+      <div><h1>Visao geral</h1><p>Condominio Solar · 12 de junho de 2026</p></div>
+      <div class="actions"><button class="btn">Exportar relatorio</button><button class="btn primary">+ Novo rateio</button></div>
+    </header>
+    <section class="kpis" aria-label="Indicadores principais">
+      <article class="card"><div class="label">Geracao mensal</div><div class="value">1.030 kWh</div><div class="trend">↑ 8,2% vs. maio</div></article>
+      <article class="card"><div class="label">Consumo mensal</div><div class="value">1.200 kWh</div><div class="trend">↓ 3,1% vs. maio</div></article>
+      <article class="card"><div class="label">Creditos disponiveis</div><div class="value">600 kWh</div><div class="trend">Proximo rateio: 15/06</div></article>
+      <article class="card"><div class="label">Economia estimada</div><div class="value">R$ 842</div><div class="trend">↑ R$ 74 neste mes</div></article>
+    </section>
+    <section class="grid">
+      <article class="card">
+        <div class="section-title"><h2>Geracao e consumo</h2><span>Ultimos 7 dias</span></div>
+        <div class="chart" role="img" aria-label="Grafico de geracao e consumo nos ultimos sete dias">
+          <div class="bar" style="height:58%" data-day="Seg"></div><div class="bar" style="height:74%" data-day="Ter"></div>
+          <div class="bar" style="height:66%" data-day="Qua"></div><div class="bar" style="height:84%" data-day="Qui"></div>
+          <div class="bar" style="height:48%" data-day="Sex"></div><div class="bar" style="height:63%" data-day="Sab"></div>
+          <div class="bar" style="height:76%" data-day="Dom"></div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="section-title"><h2>Alertas prioritarios</h2><span>Ver todos</span></div>
+        <div class="alert"><span class="severity"></span><div><strong>Queda brusca de geracao</strong><small>AP-102 · ha 18 min</small></div><span class="tag">ALTO</span></div>
+        <div class="alert"><span class="severity medium"></span><div><strong>Comunicacao instavel</strong><small>AP-201 · ha 2 h</small></div><span class="tag" style="color:#9a6500;background:#fff6df">MEDIO</span></div>
+        <div class="alert"><span class="severity medium"></span><div><strong>Leitura atrasada</strong><small>Area comum · ha 5 h</small></div><span class="tag" style="color:#9a6500;background:#fff6df">MEDIO</span></div>
+      </article>
+    </section>
+    <section class="card table-card">
+      <div class="section-title"><h2>Desempenho por unidade</h2><span>Ordenado por saldo</span></div>
+      <table><thead><tr><th>Unidade</th><th>Geracao</th><th>Consumo</th><th>Saldo</th><th>Status</th></tr></thead><tbody>
+        <tr><td><strong>Area comum</strong>Condominio Solar</td><td>480 kWh</td><td>190 kWh</td><td class="positive">+290 kWh</td><td><span class="status">Normal</span></td></tr>
+        <tr><td><strong>AP-201</strong>Carla Mendes</td><td>150 kWh</td><td>280 kWh</td><td class="negative">-130 kWh</td><td><span class="status">Normal</span></td></tr>
+        <tr><td><strong>AP-101</strong>Ana Souza</td><td>180 kWh</td><td>320 kWh</td><td class="negative">-140 kWh</td><td><span class="status">Normal</span></td></tr>
+        <tr><td><strong>AP-102</strong>Bruno Lima</td><td>220 kWh</td><td>410 kWh</td><td class="negative">-190 kWh</td><td><span class="tag">Atencao</span></td></tr>
+      </tbody></table>
+    </section>
+  </main>
+</div>
+<nav class="mobile-nav" aria-label="Navegacao mobile"><a href="#"><b>▦</b>Inicio</a><a href="#"><b>⌂</b>Unidades</a><a href="#"><b>⇄</b>Rateios</a><a href="#"><b>⚠</b>Alertas</a></nav>
+</body>
+</html>
